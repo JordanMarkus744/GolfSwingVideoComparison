@@ -1,14 +1,30 @@
 {
-  "description": "Hello World!",
+  "name": "golf-swing-comparison",
+  "description": "Was created for golfers but can be used by anyone. It allows golfers to compare their swings with other players, take a video of your swing, and get a video of another golfer's swing and you can compare the two. You can draw on the video so you can compare better.",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder"
   },
   "author": "Jordan Markus",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^35.0.3"
+    "electron": "^35.0.3",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.golf.swing.comparison",
+    "productName": "Golf Swing Comparison",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "icon": "images/icon.ico", 
+      "target": "nsis",
+      "artifactName": "${productName} Setup ${version}.exe"
+      
+    }
   }
 }
