@@ -181,14 +181,21 @@ function startLoop() {
       if (isPaused) return;
       video1.pause();
       video2.pause();
-      video1.currentTime = timestamps.video1;
-      video2.currentTime = timestamps.video2;
+
+      let leftOfMark1 = timestamps.video1 - loopTime;
+      let leftOfMark2 = timestamps.video2 - loopTime;
+
+      if (leftOfMark1 < 0) leftOfMark1 = 0;
+      if (leftOfMark2 < 0) leftOfMark2 = 0;
+
+      video1.currentTime = leftOfMark1;
+      video2.currentTime = leftOfMark2;
       video1.play();
       video2.play();
     }
 
     if (loopInterval) clearInterval(loopInterval);
-    loopInterval = setInterval(loopVideos, loopTime * 1000);
+    loopInterval = setInterval(loopVideos, loopTime * 1000 * 2); // times 2 for the right side of the Mark
     loopVideos();
   } else if (isVideo1) {
     // Only video1 exists
@@ -202,12 +209,16 @@ function startLoop() {
     function loopVideos() {
       if (isPaused) return;
       video1.pause();
-      video1.currentTime = timestamps.video1;
+
+      let leftOfMark1 = timestamps.video1 - loopTime;
+      if (leftOfMark1 < 0) leftOfMark1 = 0;
+
+      video1.currentTime = leftOfMark1;
       video1.play();
     }
 
     if (loopInterval) clearInterval(loopInterval);
-    loopInterval = setInterval(loopVideos, loopTime * 1000);
+    loopInterval = setInterval(loopVideos, loopTime * 1000 * 2);
     loopVideos();
   } else if (isVideo2) {
     // Only video2 exists
@@ -221,12 +232,16 @@ function startLoop() {
     function loopVideos() {
       if (isPaused) return;
       video2.pause();
-      video2.currentTime = timestamps.video2;
+
+      let leftOfMark2 = timestamps.video2 - loopTime;
+      if (leftOfMark2 < 0) leftOfMark2 = 0;
+
+      video2.currentTime = leftOfMark2;
       video2.play();
     }
 
     if (loopInterval) clearInterval(loopInterval);
-    loopInterval = setInterval(loopVideos, loopTime * 1000);
+    loopInterval = setInterval(loopVideos, loopTime * 1000 * 2);
     loopVideos();
   } else {
     // Neither video exists

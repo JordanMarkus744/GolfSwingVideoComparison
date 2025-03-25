@@ -24,7 +24,12 @@
       "icon": "images/icon.ico", 
       "target": "nsis",
       "artifactName": "${productName} Setup ${version}.exe"
-      
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
