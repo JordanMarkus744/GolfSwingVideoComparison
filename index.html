@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; media-src 'self' blob:;" />
+    <link rel="stylesheet" href="index.css">
+    <div id="custom-title-bar">
+        <button id="minimize"><span id="minimize-text">—</span></button>
+        <button id="maximize"><span id="maximize-text">⛶</span></button>
+        <button id="close"><span id="close-text">✖</span></button>
+      </div>
+    <title>Video Comparitor</title>
+</head>
+<body>
+    <h1>Video Comparitor</h1>
+
+    <div class="video-container">
+        <!-- Video 1 -->
+        <div class="video-wrapper">
+            <label class="custom-file-label" for="videoInput1">Select Video 1</label>
+            <input type="file" id="videoInput1" accept="video/*" />
+            <div class="video-overlay">
+                <video id="video1" controls></video>
+                <canvas id="canvas1" class="overlay"></canvas>
+            </div>
+            <div class="button-container">
+                <button id="mark1">📌 Mark Time</button>
+                <button id="back1">◀ Frame Back</button>
+                <button id="forward1">Frame Forward ▶</button>
+                <button id="draw1">✏ Draw Line</button>
+                <button id="clear1">🗑 Clear Lines</button> <!-- Added button -->
+            </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-wrapper">
+            <label class="custom-file-label" for="videoInput2">Select Video 2</label>
+            <input type="file" id="videoInput2" accept="video/*" />
+            <div class="video-overlay">
+                <video id="video2" controls></video>
+                <canvas id="canvas2" class="overlay"></canvas>
+            </div>
+            <div class="button-container">
+                <button id="mark2">📌 Mark Time</button>
+                <button id="back2">◀ Frame Back</button>
+                <button id="forward2">Frame Forward ▶</button>
+                <button id="draw2">✏ Draw Line</button>
+                <button id="clear2">🗑 Clear Lines</button> <!-- Added button -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loop Control -->
+    <div class="loop-container">
+        <label>Loop Duration (seconds):</label>
+        <input type="number" id="loopDuration" value="2" min="1" max="5" />
+        <button id="loopButton">🔄 Loop Videos</button>
+        <button id="stopButton">⏹ Stop Loop</button>
+        <button id="resumeButton">▶️ Resume Loop</button>
+        <button id="pauseButton">⏸️ Pause Loop</button>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>

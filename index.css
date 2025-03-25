@@ -1,0 +1,221 @@
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #181818;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom Title Bar */
+#custom-title-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #222;
+    padding: 5px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    -webkit-app-region: drag; /* Makes the entire title bar draggable */
+    z-index: 10;
+}
+
+#custom-title-bar button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 10px;
+    -webkit-app-region: no-drag; /* Ensures buttons are clickable */
+}
+
+#custom-title-bar button:hover {
+    filter: brightness(1.2);
+}
+
+#minimize:hover {
+    background: green;
+    #minimize-text{
+        color: black;
+    }
+}
+
+#maximize:hover {
+    background: yellow;
+    #maximize-text{
+        color: black;
+    }
+}
+
+#close:hover {
+    background: red;
+    #close-text{
+        color: black;
+    }
+}
+
+/* Title */
+h1 {
+    font-size: 28px;
+    margin-top: 50px; /* Added space from title bar */
+    margin-bottom: 30px;
+}
+
+/* Video Container */
+.video-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+/* Individual Video Wrapper */
+.video-wrapper {
+    position: relative;
+    background: #222;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 480px;
+}
+
+/* Video Overlay */
+.video-overlay {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Video */
+video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1; /* Ensure video is behind the canvas */
+}
+
+/* Canvas for Drawing */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Initially none, will be toggled by JavaScript */
+    z-index: 2; /* Always keep above video */
+}
+
+/* File Upload Button */
+.file-input-container {
+    margin-bottom: 15px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-label {
+    background-color: #444;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+
+.custom-file-label:hover {
+    background-color: #666;
+}
+
+/* Button Styling */
+.button-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+/* Loop Controls */
+.loop-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.loop-container input {
+    width: 60px;
+    padding: 7px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+    font-size: 15px;
+}
+
+/* Loop Control Buttons */
+.loop-container button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.loop-container button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+/* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #222; /* Background of the scrollbar track */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555; /* Color of the scroll thumb */
+    border-radius: 5px;
+    transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #777; /* Color when hovered */
+}
