@@ -4,6 +4,7 @@ let timestamps = { video1: 0, video2: 0 };
 let loopInterval = null;
 let drawingMode = { video1: false, video2: false }; // Track drawing mode for each video
 let isPaused = false;
+let playbackRate = 1.0;
 
 // Select elements
 const video1 = document.getElementById("video1");
@@ -158,104 +159,76 @@ function toggleDrawing(videoId, buttonId) {
   }
 }
 
+// sets the playback rate of the video
+function setPlaybackRate(rate) {
+  console.log("setting playback speed to ", rate);
+  video1.playbackRate = rate;
+  video2.playbackRate = rate;
+  playbackRate = rate;
+  // Find the button matching the rate and set it as selected
+  const buttons = document.querySelectorAll(".playback-controls button");
+  buttons.forEach((btn) => {
+    if (btn.value == rate) {
+      btn.classList.add("selected");
+    } else {
+      btn.classList.remove("selected");
+    }
+  });
+  console.log("ahhhhh");
+  if (timestamps.video1 !== 0 || timestamps.video2 !== 0) {
+    console.log("HERE");
+    startLoop();
+  }
+}
+
 // Start Looping
 function startLoop() {
   let loopTime = parseFloat(document.getElementById("loopDuration").value) || 1;
 
   if (loopTime < 0.5) {
     alert("Loop time must be greater than or equal to 0.5 seconds!");
+    return;
   }
 
-  console.log("Video 1:", video1, "Video 2:", video2);
+  if (loopInterval) clearTimeout(loopInterval); // Clear any existing timeout
+  isPaused = false;
 
-  if (isVideo1 && isVideo2) {
-    // Both videos exist
-    if (!timestamps.video1 || !timestamps.video2) {
-      alert("Mark a timestamp for both videos first!");
-      return;
-    }
+  function loopVideos() {
+    if (isPaused) return;
 
-    isPaused = false;
+    let leftOfMark1 = timestamps.video1 ? timestamps.video1 - loopTime : 0;
+    let leftOfMark2 = timestamps.video2 ? timestamps.video2 - loopTime : 0;
 
-    function loopVideos() {
-      if (isPaused) return;
+    if (leftOfMark1 < 0) leftOfMark1 = 0;
+    if (leftOfMark2 < 0) leftOfMark2 = 0;
+
+    if (isVideo1) {
       video1.pause();
-      video2.pause();
-
-      let leftOfMark1 = timestamps.video1 - loopTime;
-      let leftOfMark2 = timestamps.video2 - loopTime;
-
-      if (leftOfMark1 < 0) leftOfMark1 = 0;
-      if (leftOfMark2 < 0) leftOfMark2 = 0;
-
-      video1.currentTime = leftOfMark1;
-      video2.currentTime = leftOfMark2;
-      video1.play();
-      video2.play();
-    }
-
-    if (loopInterval) clearInterval(loopInterval);
-    loopInterval = setInterval(loopVideos, loopTime * 1000 * 2); // times 2 for the right side of the Mark
-    loopVideos();
-  } else if (isVideo1) {
-    // Only video1 exists
-    if (!timestamps.video1) {
-      alert("Mark a timestamp for video in slot 1!");
-      return;
-    }
-
-    isPaused = false;
-
-    function loopVideos() {
-      if (isPaused) return;
-      video1.pause();
-
-      let leftOfMark1 = timestamps.video1 - loopTime;
-      if (leftOfMark1 < 0) leftOfMark1 = 0;
-
       video1.currentTime = leftOfMark1;
       video1.play();
     }
-
-    if (loopInterval) clearInterval(loopInterval);
-    loopInterval = setInterval(loopVideos, loopTime * 1000 * 2);
-    loopVideos();
-  } else if (isVideo2) {
-    // Only video2 exists
-    if (!timestamps.video2) {
-      alert("Mark a timestamp for video in slot 2!");
-      return;
-    }
-
-    isPaused = false;
-
-    function loopVideos() {
-      if (isPaused) return;
+    if (isVideo2) {
       video2.pause();
-
-      let leftOfMark2 = timestamps.video2 - loopTime;
-      if (leftOfMark2 < 0) leftOfMark2 = 0;
-
       video2.currentTime = leftOfMark2;
       video2.play();
     }
 
-    if (loopInterval) clearInterval(loopInterval);
-    loopInterval = setInterval(loopVideos, loopTime * 1000 * 2);
-    loopVideos();
-  } else {
-    // Neither video exists
-    alert("No video slots contain videos!");
+    // Dynamically adjust delay based on playback speed
+    let adjustedTime = ((loopTime * 1000) / playbackRate) * 2;
+    loopInterval = setTimeout(loopVideos, adjustedTime);
+    console.log("playbackRate: ", playbackRate);
+    console.log(adjustedTime);
   }
+
+  loopVideos(); // Start the loop
 }
-
 // Stop Looping
 function stopLoop() {
-  clearInterval(loopInterval);
-  loopInterval = null;
-  isPaused = false;
-  video1.pause();
-  video2.pause();
+  isPaused = true;
+  if (loopInterval) {
+    clearInterval(loopInterval);
+    loopInterval = null;
+  }
 }
 
 function pauseLoop() {
@@ -274,6 +247,25 @@ function resumeLoop() {
   }
 }
 // Attach event listeners
+document.addEventListener("DOMContentLoaded", function () {
+  setPlaybackRate(1.0); // Initialize playback speed and button highlight
+
+  const buttons = document.querySelectorAll(".playback-controls button");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+      // Remove 'selected' class from all buttons
+      buttons.forEach((btn) => btn.classList.remove("selected"));
+
+      // Add 'selected' class to the clicked button
+      this.classList.add("selected");
+
+      // Set playback rate based on the clicked button
+      const rate = parseFloat(this.value);
+      setPlaybackRate(rate);
+    });
+  });
+});
 document
   .getElementById("back1")
   .addEventListener("click", () => frameStep("video1", -1 / 30)); // Back 1 frame (assuming 30fps)

@@ -200,6 +200,12 @@ button:hover {
     transform: scale(1.05);
 }
 
+
+.playback-controls button.selected {
+    background-color: green;
+    color: white;
+}
+
 /* For Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 10px; /* Width of the scrollbar */

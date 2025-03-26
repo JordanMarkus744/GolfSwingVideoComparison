@@ -8,13 +8,25 @@
         <button id="minimize"><span id="minimize-text">—</span></button>
         <button id="maximize"><span id="maximize-text">⛶</span></button>
         <button id="close"><span id="close-text">✖</span></button>
-      </div>
+    </div>
     <title>Golf Video Comparitor</title>
 </head>
 <body>
     <h1>Video Comparitor</h1>
 
-    <div class="video-container">
+    <!-- Playback Speed Control Buttons -->
+    <div class="row playback-controls">
+        <button value="0.25">0.25x</button>
+        <button value="0.50">0.50x</button>
+        <button value="0.75">0.75x</button>
+        <button class="selected" value="1.0">1.0x</button>
+        <button value="1.5">1.5x</button>
+        <button value="2.0">2.0x</button>
+        <button value="4.0">4.0x</button>
+    </div>
+
+    <!-- Video Container -->
+    <div class="row video-container">
         <!-- Video 1 -->
         <div class="video-wrapper">
             <label class="custom-file-label" for="videoInput1">Select Video 1</label>
@@ -28,7 +40,7 @@
                 <button id="back1">◀ Frame Back</button>
                 <button id="forward1">Frame Forward ▶</button>
                 <button id="draw1">✏ Draw Line</button>
-                <button id="clear1">🗑 Clear Lines</button> <!-- Added button -->
+                <button id="clear1">🗑 Clear Lines</button>
             </div>
         </div>
 
@@ -45,13 +57,13 @@
                 <button id="back2">◀ Frame Back</button>
                 <button id="forward2">Frame Forward ▶</button>
                 <button id="draw2">✏ Draw Line</button>
-                <button id="clear2">🗑 Clear Lines</button> <!-- Added button -->
+                <button id="clear2">🗑 Clear Lines</button>
             </div>
         </div>
     </div>
 
     <!-- Loop Control -->
-    <div class="loop-container">
+    <div class="row loop-container">
         <label>Loop Duration (seconds):</label>
         <input type="number" id="loopDuration" value="2" min="1" max="5" />
         <button id="loopButton">🔄 Loop Videos</button>
@@ -60,6 +72,7 @@
         <button id="pauseButton">⏸️ Pause Loop</button>
     </div>
 
+    
     <script src="renderer.js"></script>
 </body>
 </html>
