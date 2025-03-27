@@ -174,11 +174,7 @@ function setPlaybackRate(rate) {
       btn.classList.remove("selected");
     }
   });
-  console.log("ahhhhh");
-  if (timestamps.video1 !== 0 || timestamps.video2 !== 0) {
-    console.log("HERE");
-    startLoop();
-  }
+
 }
 
 // Start Looping
